@@ -1,27 +1,47 @@
-
 const LENGUAJE = "JavaScript"
-let intentos = 6
-let gano = false
 
-alert("Bienvenido al juego del ahorcado")
-alert("Tenes 6 intentos para adivinar el lenguaje de programación")
-prompt("Presione enter para continuar")
+function solicitarLenguaje(mensaje) {
+    return prompt(mensaje)
+}
 
-while (intentos > 0 && !gano) {
-    
-    const palabra = prompt("Ingrese un lenguaje: ")
+const comprobarRespuesta = (respuesta, lenguajeCorrecto) => respuesta === lenguajeCorrecto
 
-    if (palabra === LENGUAJE) {
-        intentos = 0
-        gano = true
-        alert("Ganaste. Adivinaste el lenguaje!!!")
+
+function mostrarMensaje(mensaje) {
+    alert(mensaje)
+}
+
+
+function jugarAhorcado(lenguajeCorrecto) {
+    let intentos = 6
+    let gano = false
+
+    mostrarMensaje("Bienvenido al juego del ahorcado")
+    mostrarMensaje(
+        "Tenés " + intentos +
+        " intentos para adivinar el lenguaje de programación."
+    )
+
+    while (intentos > 0 && !gano) {
+        const respuesta = solicitarLenguaje(
+            "Ingresá un lenguaje. Intentos restantes: " + intentos
+        )
+
+        gano = comprobarRespuesta(respuesta, lenguajeCorrecto)
+
+        if (gano) {
+            mostrarMensaje("¡Ganaste! ¡Adivinaste el lenguaje!")
+        } else {
+            intentos--
+            mostrarMensaje("Respuesta incorrecta. Te quedan " + intentos + " intentos.")
+        }
     }
-    else {
-        intentos--;
-        alert("Te quedan " + intentos + " intentos")
+
+    if (!gano) {
+        mostrarMensaje(
+            "Lo siento, perdiste. El lenguaje era: " + lenguajeCorrecto
+        )
     }
 }
 
-if (intentos == 0 && !gano) {
-        alert("Lo siento, perdiste. El lenguaje era: " + LENGUAJE)
-}
+jugarAhorcado(LENGUAJE)
